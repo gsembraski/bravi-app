@@ -22,7 +22,7 @@
 
                 <div class="col-xs-12 form-group mb-4">
                     <label for="lastName" class="form-label"
-                        [ngClass]="{'text-danger':form.controls['name'].touched && form.controls['lastName'].invalid}">Sobrenome</label>
+                        [ngClass]="{'text-danger':form.controls['lastName'].touched && form.controls['lastName'].invalid}">Sobrenome</label>
                     <input type="text" class="form-control form-control-lg" id="lastName" formControlName="lastName"
                         [ngClass]="{'is-invalid': form.controls['lastName'].touched && form.controls['lastName'].invalid}"
                         required>
@@ -44,5 +44,12 @@
                 </div>
             </div>
         </form>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+        
     </div>
 </div>

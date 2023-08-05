@@ -12,6 +12,7 @@ import { Person } from 'src/app/types/person';
 })
 export class PersonDetailsComponent implements OnInit {
   form: FormGroup;
+  id: any = null;
   title = "Cadastro de pessoa";
   model: Person = {
     name: "",
@@ -32,21 +33,59 @@ export class PersonDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    var id = this.route.snapshot.paramMap.get('personId');
+    var personId = this.route.snapshot.paramMap.get('personId');
 
-    if (!!id) this.title = "Editar Pessoa";
+    if (!!personId) {
+      this.id = Number(personId);
+      this.title = "Editar Pessoa";
+      this.getItem();
+    }
   }
 
   save() {
     this.form.markAllAsTouched();
     if (this.form.valid) {
-      this.personService.newPerson({ name: this.form.controls["name"].value, lastName: this.form.controls["lastName"].value, nickname: this.form.controls["lastName"].value }).pipe(map((response) => {
-        this.router.navigate(["/"]);
-      }),
-        catchError((error) => {
-          console.error('Login error:', error);
-          return throwError('Login failed');
-        })).subscribe();
+      var payload: Person = {
+        name: this.form.controls["name"].value,
+        lastName: this.form.controls["lastName"].value,
+        nickname: this.form.controls["nickname"].value
+      };
+
+      if (this.id) {
+        payload.id = this.id;
+
+        this.personService.updatePerson(payload).pipe(map((response) => {
+          this.router.navigate(["/"]);
+        }),
+          catchError((error) => {
+            console.error('Login error:', error);
+            return throwError('Login failed');
+          })).subscribe();
+      }
+      else {
+        this.personService.newPerson(payload).pipe(map((response) => {
+          this.router.navigate(["/"]);
+        }),
+          catchError((error) => {
+            console.error('Login error:', error);
+            return throwError('Login failed');
+          })).subscribe();
+      }
     }
+  }
+
+  getItem(): void {
+    this.personService.getById(this.id).pipe(map((response) => {
+      debugger
+      if (response.success) {
+        this.form.controls["name"].setValue(response.data.name);
+        this.form.controls["lastName"].setValue(response.data.lastName);
+        this.form.controls["nickname"].setValue(response.data.nickname);
+      }
+    }),
+      catchError((error) => {
+        console.error('Login error:', error);
+        return throwError('Login failed');
+      })).subscribe();
   }
 }

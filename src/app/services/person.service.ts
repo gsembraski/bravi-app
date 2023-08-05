@@ -16,7 +16,19 @@ export class PersonService {
     return this.http.get<any>(`${this.apiRoute}`);
   }
 
+  getById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiRoute}/${id}`);
+  }
+
   newPerson(payload: Person): Observable<any> {
     return this.http.post(`${this.apiRoute}`, payload);
+  }
+
+  updatePerson(payload: Person): Observable<any> {
+    return this.http.put(`${this.apiRoute}/${payload.id}`, payload);
+  }
+
+  deletePerson(id: number): Observable<any> {
+    return this.http.delete(`${this.apiRoute}/${id}`);
   }
 }
