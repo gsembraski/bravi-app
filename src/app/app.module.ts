@@ -8,8 +8,8 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { PersonDatailsComponent } from './pages/person-datails/person-datails.component';
-import { ContactDatailsComponent } from './pages/contact-datails/contact-datails.component';
+import { PersonDetailsComponent } from './pages/person-details/person-details.component';
+import { ContactDetailsComponent } from './pages/contact-details/contact-details.component';
 import { AgendaComponent } from './pages/agenda/agenda.component';
 import { BracketsComponent } from './pages/brackets/brackets.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -19,8 +19,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
   declarations: [
     AppComponent,
     NavbarComponent,
-    PersonDatailsComponent,
-    ContactDatailsComponent,
+    PersonDetailsComponent,
+    ContactDetailsComponent,
     AgendaComponent,
     BracketsComponent,
   ],

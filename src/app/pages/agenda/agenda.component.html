@@ -1,44 +1,45 @@
 <div class="row">
     <div class="col-xs-12 d-flex justify-content-start">
-    <p class="h3 title-color">Agenda de contatos</p>
-</div>
-
-<div class="row">
-    <div class="col-xs-12 d-flex justify-content-end">
-        <button class="btn btn-outline-dark">
-            Adicionar <fa-icon [icon]="faPlus"></fa-icon>
-        </button>
+        <p class="h3 title-color">Agenda de contatos</p>
     </div>
-</div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Nome</th>
-            <th scope="col">Sobrenome</th>
-            <th scope="col">Apelido</th>
-            <th scope="col">Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of items">
-            <td>{{item.name}}</td>
-            <td>{{item.lastName}}</td>
-            <td>{{item.nickname}}</td>
-            <td>
-                <div bsDropdown>
-                    <div class="btn-group" dropdown #dropdown="bs-dropdown" [autoClose]="false">
-                        <ul id="dropdown-triggers-manual" *dropdownMenu class="dropdown-menu" role="menu"
-                            aria-labelledby="button-triggers-manual">
-                            <li role="menuitem"><a class="dropdown-item" [routerLink]="'/agenda/' + item.id">Editar</a></li>
-                            <li role="menuitem" class="dropdown-item">Excluir</li>
-                        </ul>
+    <div class="row">
+        <div class="col-xs-12 d-flex justify-content-end">
+            <button class="btn btn-outline-dark" [routerLink]="'/agenda/new-item/'">
+                Adicionar <fa-icon [icon]="faPlus"></fa-icon>
+            </button>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Sobrenome</th>
+                <th scope="col">Apelido</th>
+                <th scope="col">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of items">
+                <td>{{item.name}}</td>
+                <td>{{item.lastName}}</td>
+                <td>{{item.nickname}}</td>
+                <td>
+                    <div bsDropdown>
+                        <div class="btn-group" dropdown #dropdown="bs-dropdown" [autoClose]="false">
+                            <ul id="dropdown-triggers-manual" *dropdownMenu class="dropdown-menu" role="menu"
+                                aria-labelledby="button-triggers-manual">
+                                <li role="menuitem"><a class="dropdown-item"
+                                        [routerLink]="'/agenda/' + item.id">Editar</a></li>
+                                <li role="menuitem" class="dropdown-item">Excluir</li>
+                            </ul>
+                        </div>
+                        <button type="button" class="btn" bs-toggle="button"
+                            (click)="dropdown.isOpen = !dropdown.isOpen"><fa-icon
+                                [icon]="faEllipsisVertical"></fa-icon></button>
                     </div>
-                    <button type="button" class="btn" bs-toggle="button"
-                        (click)="dropdown.isOpen = !dropdown.isOpen"><fa-icon
-                            [icon]="faEllipsisVertical"></fa-icon></button>
-                </div>
-            </td>
-        </tr>
-    </tbody>
-</table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
