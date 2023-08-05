@@ -1,6 +1,6 @@
 export interface Person{
-    id: number,
+    id?: number,
     name: String,
     lastName:String,
-    nickname: string
+    nickname?: string
 }

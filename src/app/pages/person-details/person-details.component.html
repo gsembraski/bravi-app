@@ -4,14 +4,45 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="justify-content-center">
-        <div class="card">
-            <div class="card-body">
-                <form>
+<div class="card">
+    <div class="card-body">
+        <form [formGroup]="form" (ngSubmit)="save()">
+            <div class="row px-5 py-3">
+                <div class="col-xs-12 form-group mb-4">
+                    <label for="name" class="form-label"
+                        [ngClass]="{'text-danger':form.controls['name'].touched && form.controls['name'].invalid}">Nome</label>
+                    <input type="text" class="form-control form-control-lg" formControlName="name"
+                        [ngClass]="{'is-invalid': form.controls['name'].touched && form.controls['name'].invalid}"
+                        required>
+                    <div class="invalid-feedback"
+                        *ngIf="form.controls['name'].touched && form.controls['name'].invalid">
+                        Campo obrigatório.
+                    </div>
+                </div>
 
-                </form>
+                <div class="col-xs-12 form-group mb-4">
+                    <label for="lastName" class="form-label"
+                        [ngClass]="{'text-danger':form.controls['name'].touched && form.controls['lastName'].invalid}">Sobrenome</label>
+                    <input type="text" class="form-control form-control-lg" id="lastName" formControlName="lastName"
+                        [ngClass]="{'is-invalid': form.controls['lastName'].touched && form.controls['lastName'].invalid}"
+                        required>
+                    <div class="invalid-feedback"
+                        *ngIf="form.controls['lastName'].touched && form.controls['lastName'].invalid">
+                        Campo obrigatório.
+                    </div>
+                </div>
+
+                <div class="col-xs-12 form-group mb-4">
+                    <label for="inpNick" class="form-label">Apelido</label>
+                    <input type="text" class="form-control form-control-lg" id="inpNick" formControlName="nickname">
+                </div>
+
+                <div class="col-xs-12 d-flex justify-content-end">
+                    <button class="btn btn-outline-dark px-4 py-2">
+                        Salvar
+                    </button>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>

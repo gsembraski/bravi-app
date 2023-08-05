@@ -14,6 +14,7 @@ import { AgendaComponent } from './pages/agenda/agenda.component';
 import { BracketsComponent } from './pages/brackets/brackets.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     FontAwesomeModule,
     BsDropdownModule.forRoot()
   ],
