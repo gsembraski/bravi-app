@@ -10,14 +10,14 @@
 .title-bravi {
   background: linear-gradient(to right, #712eaf 0%, #da2892 100%);
   padding: 0px 3px 3px;
-  color: white;
+  color: white !important;
   font-weight: 900;
 }
 
 .title-bravi2 {
   background: linear-gradient(to right, #ed2652 0%,#dcba48 100%)!important;
   padding: 0px 3px 3px;
-  color: white;
+  color: white !important;
   font-weight: 700;
 }
 
@@ -34,3 +34,5 @@
   height: 0;
   font-size: 12px;
 }
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';

@@ -1,0 +1,19 @@
+<div class="modal-body" *ngIf="!!message">
+    <div class="row">
+        <div class="col-xs-12 d-flex justify-content-center">
+            <img class="mb-5" src="../../../assets/img//loading-loading-gif.gif" alt="GIF Animation"
+                *ngIf="type == 'loading'">
+            <fa-icon class="mb-3" [icon]="getIcon()" *ngIf="type !== 'loading'" [ngClass]="{'text-danger': type === 'error', 'text-success': type === 'success'}"></fa-icon>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 d-flex justify-content-center">
+            <p class="h1">{{title}}</p>
+        </div>
+        
+        <div class="col-xs-12 d-flex justify-content-center" *ngIf="type !== 'error'">
+            <p class="h5">{{message}}</p>
+        </div>
+    </div>
+</div>

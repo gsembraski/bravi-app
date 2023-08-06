@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, catchError } from 'rxjs';
 import { ContactService } from 'src/app/services/contact.service';
+import { ModalService } from 'src/app/services/modal.service';
 import { Contact } from 'src/app/types/contact';
 
 @Component({
@@ -19,8 +20,9 @@ export class ContactDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private formBuilder: FormBuilder,
     private contactService: ContactService,
-    private formBuilder: FormBuilder
+    private modalService: ModalService
   ) {
     this.form = this.formBuilder.group({
       value: ['', Validators.required],
@@ -40,16 +42,18 @@ export class ContactDetailsComponent implements OnInit {
   }
 
   getItem(): void {
+    var loading = this.modalService.openLoadingModal("");
     this.contactService.getById(this.id).pipe(map((response) => {
-      debugger
-      if (response.success) {
-        this.form.controls["value"].setValue(response.data.value);
-        this.form.controls["type"].setValue(response.data.type);
-        this.form.controls["isMain"].setValue(response.data.isMain);
-      }
+      setTimeout(() => loading.close(), 500)
+      this.form.controls["value"].setValue(response.data.value);
+      this.form.controls["type"].setValue(response.data.type);
+      this.form.controls["isMain"].setValue(response.data.isMain);
     }),
       catchError((error) => {
-        console.error('Error:', error);
+        setTimeout(() => {
+          loading.close()
+          this.modalService.openErrorModal(error["error"]?.["errors"] || error["errors"]?.["Value"])
+        }, 600);
         return error;
       })).subscribe();
   }
@@ -58,6 +62,8 @@ export class ContactDetailsComponent implements OnInit {
   save() {
     this.form.markAllAsTouched();
     if (this.form.valid) {
+      var loading = this.modalService.openLoadingModal("");
+      
       var payload: Contact = {
         value: this.form.controls["value"].value,
         isMain: this.form.controls["isMain"].value,
@@ -68,19 +74,33 @@ export class ContactDetailsComponent implements OnInit {
         payload.id = this.id;
 
         this.contactService.updateContact(payload).pipe(map((response) => {
+          setTimeout(() => {
+            loading.close()
+            this.modalService.openSuccessModal(response.message)
+          }, 500);
           this.router.navigate(["/agenda/" + this.personId]);
         }),
           catchError((error) => {
-            console.error('Error:', error);
+            setTimeout(() => {
+              loading.close()
+              this.modalService.openErrorModal(error["error"]?.["errors"] || error["errors"]?.["Value"])
+            }, 600);
             return error;
           })).subscribe();
       }
       else {
         this.contactService.createContact(payload, this.personId).pipe(map((response) => {
+          setTimeout(() => {
+            loading.close()
+            this.modalService.openSuccessModal(response.message)
+          }, 500);
           this.router.navigate(["/agenda/" + this.personId]);
         }),
           catchError((error) => {
-            console.error('Error:', error);
+            setTimeout(() => {
+              loading.close()
+              this.modalService.openErrorModal(error["error"]?.["errors"] || error["errors"]?.["Value"])
+            }, 600);
             return error;
           })).subscribe();
       }

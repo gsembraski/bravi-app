@@ -7,6 +7,7 @@ import { Person } from 'src/app/types/person';
 import { faEllipsisVertical, faCircleCheck, faPlus } from "@fortawesome/free-solid-svg-icons"
 import { Contact } from 'src/app/types/contact';
 import { ContactService } from 'src/app/services/contact.service';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
   selector: 'app-person-datails',
@@ -28,7 +29,8 @@ export class PersonDetailsComponent implements OnInit {
     private router: Router,
     private personService: PersonService,
     private contactService: ContactService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private modalService: ModalService
   ) {
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
@@ -50,6 +52,8 @@ export class PersonDetailsComponent implements OnInit {
   save() {
     this.form.markAllAsTouched();
     if (this.form.valid) {
+      var loading = this.modalService.openLoadingModal("");
+
       var payload: Person = {
         name: this.form.controls["name"].value,
         lastName: this.form.controls["lastName"].value,
@@ -60,6 +64,10 @@ export class PersonDetailsComponent implements OnInit {
         payload.id = this.id;
 
         this.personService.updatePerson(payload).pipe(map((response) => {
+          setTimeout(() => {
+            loading.close()
+            this.modalService.openSuccessModal(response.message)
+          }, 500);
           this.router.navigate(["/"]);
         }),
           catchError((error) => {
@@ -69,6 +77,10 @@ export class PersonDetailsComponent implements OnInit {
       }
       else {
         this.personService.newPerson(payload).pipe(map((response) => {
+          setTimeout(() => {
+            loading.close()
+            this.modalService.openSuccessModal(response.message)
+          }, 500);
           this.router.navigate(["/agenda/" + response.data]);
         }),
           catchError((error) => {
@@ -97,13 +109,21 @@ export class PersonDetailsComponent implements OnInit {
   }
 
   remove(id: any): void {
+    var loading = this.modalService.openLoadingModal("");
     this.contactService.deleteContact(id).pipe(map((response) => {
       if (response.success) {
+        setTimeout(() => {
+          loading.close()
+          this.modalService.openSuccessModal(response.message)
+        }, 600);
         this.getItem();
       }
     }),
       catchError((error) => {
-        console.error('Error:', error);
+        setTimeout(() => {
+          loading.close()
+          this.modalService.openErrorModal(error["error"]?.["errors"] || error["errors"]?.["Value"])
+        }, 600);
         return error;
       })).subscribe();
   }

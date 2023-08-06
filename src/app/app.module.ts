@@ -15,6 +15,8 @@ import { BracketsComponent } from './pages/brackets/brackets.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalMessageComponent } from './components/modal-message/modal-message.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ContactDetailsComponent,
     AgendaComponent,
     BracketsComponent,
+    ModalMessageComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    BsDropdownModule.forRoot()
+    BsDropdownModule.forRoot(),
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
