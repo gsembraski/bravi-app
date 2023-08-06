@@ -49,7 +49,7 @@ export class ContactDetailsComponent implements OnInit {
       }
     }),
       catchError((error) => {
-        console.error('Login error:', error);
+        console.error('Error:', error);
         return error;
       })).subscribe();
   }
@@ -71,7 +71,7 @@ export class ContactDetailsComponent implements OnInit {
           this.router.navigate(["/agenda/" + this.personId]);
         }),
           catchError((error) => {
-            console.error('Login error:', error);
+            console.error('Error:', error);
             return error;
           })).subscribe();
       }
@@ -80,7 +80,7 @@ export class ContactDetailsComponent implements OnInit {
           this.router.navigate(["/agenda/" + this.personId]);
         }),
           catchError((error) => {
-            console.error('Login error:', error);
+            console.error('Error:', error);
             return error;
           })).subscribe();
       }

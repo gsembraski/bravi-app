@@ -25,7 +25,7 @@ export class AgendaComponent implements OnInit {
       this.items = response.data;
     }),
       catchError((error) => {
-        console.error('Login error:', error);
+        console.error('Error:', error);
         return throwError('Login failed');
       })).subscribe();
   }
@@ -37,7 +37,7 @@ export class AgendaComponent implements OnInit {
       }
     }),
       catchError((error) => {
-        console.error('Login error:', error);
+        console.error('Error:', error);
         return error;
       })).subscribe();
   }

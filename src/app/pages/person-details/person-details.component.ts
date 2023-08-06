@@ -63,7 +63,7 @@ export class PersonDetailsComponent implements OnInit {
           this.router.navigate(["/"]);
         }),
           catchError((error) => {
-            console.error('Login error:', error);
+            console.error('Error:', error);
             return error;
           })).subscribe();
       }
@@ -72,7 +72,7 @@ export class PersonDetailsComponent implements OnInit {
           this.router.navigate(["/agenda/" + response.data]);
         }),
           catchError((error) => {
-            console.error('Login error:', error);
+            console.error('Error:', error);
             return error;
           })).subscribe();
       }
@@ -91,7 +91,7 @@ export class PersonDetailsComponent implements OnInit {
       }
     }),
       catchError((error) => {
-        console.error('Login error:', error);
+        console.error('Error:', error);
         return error;
       })).subscribe();
   }
@@ -103,7 +103,7 @@ export class PersonDetailsComponent implements OnInit {
       }
     }),
       catchError((error) => {
-        console.error('Login error:', error);
+        console.error('Error:', error);
         return error;
       })).subscribe();
   }
