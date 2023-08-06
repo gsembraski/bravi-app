@@ -17,12 +17,28 @@ export class AgendaComponent implements OnInit {
   constructor(private personService : PersonService){}
 
   ngOnInit(): void {
+    this.getAgenda();
+  }
+
+  getAgenda(){
     this.personService.getAgenda().pipe(map((response) => {
       this.items = response.data;
     }),
       catchError((error) => {
         console.error('Login error:', error);
         return throwError('Login failed');
+      })).subscribe();
+  }
+
+  remove(id: any): void {
+    this.personService.deletePerson(id).pipe(map((response) => {
+      if (response.success) {
+        this.getAgenda();
+      }
+    }),
+      catchError((error) => {
+        console.error('Login error:', error);
+        return error;
       })).subscribe();
   }
 }

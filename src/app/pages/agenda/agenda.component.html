@@ -32,7 +32,7 @@
                                 aria-labelledby="button-triggers-manual">
                                 <li role="menuitem"><a class="dropdown-item"
                                         [routerLink]="['/agenda', item.id]">Editar</a></li>
-                                <li role="menuitem" class="dropdown-item">Excluir</li>
+                                <li role="menuitem" class="dropdown-item" (click)="remove(item.id)">Excluir</li>
                             </ul>
                         </div>
                         <button type="button" class="btn" bs-toggle="button"

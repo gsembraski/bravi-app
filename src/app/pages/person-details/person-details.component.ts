@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map, catchError, throwError } from 'rxjs';
 import { PersonService } from 'src/app/services/person.service';
 import { Person } from 'src/app/types/person';
+import { faEllipsisVertical, faCircleCheck, faPlus } from "@fortawesome/free-solid-svg-icons"
+import { Contact } from 'src/app/types/contact';
+import { ContactService } from 'src/app/services/contact.service';
 
 @Component({
   selector: 'app-person-datails',
@@ -11,18 +14,20 @@ import { Person } from 'src/app/types/person';
   styleUrls: ['./person-details.component.scss']
 })
 export class PersonDetailsComponent implements OnInit {
+  faPlus = faPlus;
+  faEllipsisVertical = faEllipsisVertical;
+  faCircleCheck = faCircleCheck;
   form: FormGroup;
   id: any = null;
   title = "Cadastro de pessoa";
-  model: Person = {
-    name: "",
-    lastName: ""
-  }
+  phones: Array<Contact> = [];
+  emails: Array<Contact> = [];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private personService: PersonService,
+    private contactService: ContactService,
     private formBuilder: FormBuilder
   ) {
     this.form = this.formBuilder.group({
@@ -59,16 +64,16 @@ export class PersonDetailsComponent implements OnInit {
         }),
           catchError((error) => {
             console.error('Login error:', error);
-            return throwError('Login failed');
+            return error;
           })).subscribe();
       }
       else {
         this.personService.newPerson(payload).pipe(map((response) => {
-          this.router.navigate(["/"]);
+          this.router.navigate(["/agenda/" + response.data]);
         }),
           catchError((error) => {
             console.error('Login error:', error);
-            return throwError('Login failed');
+            return error;
           })).subscribe();
       }
     }
@@ -76,16 +81,30 @@ export class PersonDetailsComponent implements OnInit {
 
   getItem(): void {
     this.personService.getById(this.id).pipe(map((response) => {
-      debugger
       if (response.success) {
         this.form.controls["name"].setValue(response.data.name);
         this.form.controls["lastName"].setValue(response.data.lastName);
         this.form.controls["nickname"].setValue(response.data.nickname);
+
+        this.phones = response.data.phoneContacts;
+        this.emails = response.data.emailContacts;
       }
     }),
       catchError((error) => {
         console.error('Login error:', error);
-        return throwError('Login failed');
+        return error;
+      })).subscribe();
+  }
+
+  remove(id: any): void {
+    this.contactService.deleteContact(id).pipe(map((response) => {
+      if (response.success) {
+        this.getItem();
+      }
+    }),
+      catchError((error) => {
+        console.error('Login error:', error);
+        return error;
       })).subscribe();
   }
 }

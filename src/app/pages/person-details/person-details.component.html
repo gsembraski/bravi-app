@@ -1,4 +1,4 @@
-<div class="row mb-5">
+<div class="row mb-3">
     <div class="col-xs-12 d-flex">
         <p class="h3 title-bravi">{{title}}</p>
     </div>
@@ -47,9 +47,94 @@
     </div>
 </div>
 
+<div *ngIf="!!id">
+    <div class="row p-0 mt-5">
+        <div class="col-sm-6 d-flex">
+            <p class="h4 title-bravi2">Contatos</p>
+        </div>
+        <div class="col-sm-6 d-flex justify-content-end">
+            <button class="btn btn-outline-dark" [routerLink]="'/agenda/' +id + '/contact/new-item'">
+                Adicionar contato <fa-icon [icon]="faPlus"></fa-icon>
+            </button>
+        </div>
+    </div>
 
-<div class="card">
-    <div class="card-body">
-        
+    <div class="card mt-3">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Número</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of phones">
+                                <th>
+                                    <fa-icon *ngIf="item.isMain" class="text-success" [icon]="faCircleCheck"></fa-icon>
+                                </th>
+                                <td>{{item.value}}</td>
+                                <th>
+                                    <div bsDropdown>
+                                        <div class="btn-group" dropdown #dropdown="bs-dropdown" [autoClose]="false">
+                                            <ul id="dropdown-triggers-manual" *dropdownMenu class="dropdown-menu"
+                                                role="menu" aria-labelledby="button-triggers-manual">
+                                                <li role="menuitem"><a class="dropdown-item"
+                                                        [routerLink]="'/agenda/' + id + '/contact/'+ item.id">Editar</a>
+                                                </li>
+                                                <li role="menuitem" class="dropdown-item" (click)="remove(item.id)">
+                                                    Excluir</li>
+                                            </ul>
+                                        </div>
+                                        <button type="button" class="btn" bs-toggle="button"
+                                            (click)="dropdown.isOpen = !dropdown.isOpen"><fa-icon
+                                                [icon]="faEllipsisVertical"></fa-icon></button>
+                                    </div>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-md-6">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">E-mail</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of emails">
+                                <th>
+                                    <fa-icon *ngIf="item.isMain" class="text-success" [icon]="faCircleCheck"></fa-icon>
+                                </th>
+                                <td>{{item.value}}</td>
+                                <th>
+                                    <div bsDropdown>
+                                        <div class="btn-group" dropdown #dropdown="bs-dropdown" [autoClose]="false">
+                                            <ul id="dropdown-triggers-manual" *dropdownMenu class="dropdown-menu"
+                                                role="menu" aria-labelledby="button-triggers-manual">
+                                                <li role="menuitem"><a class="dropdown-item"
+                                                        [routerLink]="'/agenda/' + id + '/contact/'+ item.id">Editar</a>
+                                                <li role="menuitem" class="dropdown-item" (click)="remove(item.id)">
+                                                    Excluir</li>
+                                            </ul>
+                                        </div>
+                                        <button type="button" class="btn" bs-toggle="button"
+                                            (click)="dropdown.isOpen = !dropdown.isOpen"><fa-icon
+                                                [icon]="faEllipsisVertical"></fa-icon></button>
+                                    </div>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
